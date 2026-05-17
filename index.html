@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Гэр бүлийн Санхүү</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <div id="toast"></div>
+
+  <section id="authScreen" class="auth-screen">
+    <div class="auth-card">
+      <div class="brand">Гэр бүлийн<br><span>Санхүү</span></div>
+      <h1>Нэвтрэх</h1>
+      <p>Админ эсвэл уригдсан гэр бүлийн гишүүн нэг shared дата дээр орж ажиллана.</p>
+
+      <div class="tabs small-tabs">
+        <button id="loginTab" class="active" onclick="setAuthMode('login')">Нэвтрэх</button>
+        <button id="registerTab" onclick="setAuthMode('register')">Админ бүртгэх</button>
+        <button id="forgotTab" onclick="setAuthMode('forgot')">Нууц үг сэргээх</button>
+      </div>
+
+      <div id="loginBox">
+        <label>Имэйл</label>
+        <input id="loginEmail" placeholder="email@gmail.com" />
+        <label>Нууц үг</label>
+        <input id="loginPassword" type="password" placeholder="••••••••" />
+        <button class="btn full" onclick="login()">Нэвтрэх</button>
+        <button class="btn secondary full" onclick="sendMagicOtp()">OTP / Magic link имэйлээр авах</button>
+      </div>
+
+      <div id="registerBox" class="hidden">
+        <label>Админ нэр</label>
+        <input id="regName" placeholder="Администратор" />
+        <label>Имэйл</label>
+        <input id="regEmail" value="Adyaasd1@gmail.com" />
+        <label>Нууц үг</label>
+        <input id="regPassword" type="password" value="85570802" />
+        <label>Гэр бүлийн нэр</label>
+        <input id="familyName" placeholder="Манай гэр бүл" />
+        <button class="btn full" onclick="registerAdmin()">Админ үүсгэх</button>
+      </div>
+
+      <div id="forgotBox" class="hidden">
+        <label>Имэйл</label>
+        <input id="forgotEmail" placeholder="email@gmail.com" />
+        <button class="btn full" onclick="forgotPassword()">Reset link илгээх</button>
+      </div>
+
+      <div class="setup-note">
+        Эхлээд <b>config.js</b> файл дээр Supabase URL болон anon key оруулна.
+      </div>
+    </div>
+  </section>
+
+  <div id="app" class="app hidden">
+    <aside class="sidebar">
+      <div class="logo">Гэр бүлийн<br><span>Санхүү</span></div>
+      <div class="nav">
+        <button class="active" data-page="home">🏠 Нүүр</button>
+        <button data-page="analytics">📊 Аналитик</button>
+        <button data-page="savings">🐷 Хуримтлал</button>
+        <button data-page="loans">💳 Зээл</button>
+        <button data-page="members">👨‍👩‍👧 Гишүүд</button>
+        <button data-page="ai">🤖 AI зөвлөх</button>
+        <button data-page="settings">⚙️ Тохиргоо</button>
+      </div>
+      <div class="sidebar-user">
+        <b id="sideUser">...</b>
+        <span id="sideEmail">...</span>
+        <button class="btn secondary full" onclick="logout()">Гарах</button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <section class="page" id="page"></section>
+    </main>
+  </div>
+
+  <div class="mobilebar hidden" id="mobilebar">
+    <button data-page="home">🏠<br>Нүүр</button>
+    <button data-page="analytics">📊<br>График</button>
+    <button data-page="savings">🐷<br>Хуримтлал</button>
+    <button data-page="loans">💳<br>Зээл</button>
+  </div>
+
+  <div class="modal" id="modal">
+    <div class="sheet">
+      <div id="modalContent"></div>
+    </div>
+  </div>
+
+  <script src="./config.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>
